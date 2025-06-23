@@ -1,28 +1,14 @@
+# Simple AI Assistant with Kakao's Kanana-nano-2.1b-Instruct Model'
 import streamlit as st
 from transformers import pipeline
 import torch
 import re
 
-# Header with emoji and styled title
-# st.markdown(
-#     """
-#     <div style="text-align:center; margin-bottom:20px;">
-#       <span style="font-size:4rem;">🤗</span>
-#     </div>
-#     <div style="text-align:center; margin-bottom:10px;">
-#       <h1 style="margin:0; font-size:1.6rem;">
-#         Text Generator with <span style="color:#FF6D00;">Kakao Kanana-Nano 2.1B Instruct</span>
-#       </h1>
-#     </div>
-#     """,
-#     unsafe_allow_html=True
-# )
-
 st.markdown(
     """
     <div style="text-align:center; margin-bottom:20px;">
       <h1 style="display:inline; font-size:1.6rem; margin:0;">
-        🤗 AI Assistant with <span style="color:#FF6D00;">Kakao Kanana-Nano 2.1B Instruct</span>
+        🤗 Simple AI Assistant with <span style="color:#FF6D00;">Kakao Kanana-Nano 2.1B Instruct</span>
       </h1>
     </div>
     """,
