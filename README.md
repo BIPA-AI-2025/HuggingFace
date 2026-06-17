@@ -9,7 +9,7 @@ Hugging Face Transformers 기반 한국어 LLM 실습 코드 모음입니다.
 | `Simple_HF_Transformer_Pipleline.ipynb` | Transformers `pipeline` 기본 사용 예제 |
 | `huggingFaceIntro-pipeline.ipynb` | Hugging Face 입문 / pipeline 소개 |
 | `kanana_-nano-21b-base_app.py` | Kakao **Kanana-Nano 2.1B base** 모델 텍스트 생성 Streamlit 앱 |
-| `kanan-nano-21b-instruct-prompt-aPP.py` | Kanana-Nano 2.1B **instruct** 프롬프트 앱 |
+| `kanan-nano-21b-instruct-prompt-app.py` | Kanana-Nano 2.1B **instruct** 프롬프트 앱 |
 | `kanan-nano-21b-instruct-trans.ipynb` | Kanana-Nano 2.1B instruct 노트북 |
 | `kogpt2_text_generator.ipynb` | KoGPT2 텍스트 생성 예제 |
 
@@ -17,7 +17,7 @@ Hugging Face Transformers 기반 한국어 LLM 실습 코드 모음입니다.
 
 ```bash
 streamlit run kanana_-nano-21b-base_app.py
-streamlit run kanan-nano-21b-instruct-prompt-aPP.py
+streamlit run kanan-nano-21b-instruct-prompt-app.py
 ```
 
 > 모델(`kakaocorp/kanana-nano-2.1b-base`, `kakaocorp/kanana-nano-2.1b-instruct`)은 최초 실행 시 Hugging Face Hub에서 자동 다운로드됩니다.
@@ -25,7 +25,10 @@ streamlit run kanan-nano-21b-instruct-prompt-aPP.py
 
 ## 변경 내역 (Changelog)
 
-### 2026-06-17 — `kanan-nano-21b-instruct-prompt-aPP.py` 수정
+### 2026-06-17 — 파일명 변경
+- `kanan-nano-21b-instruct-prompt-aPP.py` → `kanan-nano-21b-instruct-prompt-app.py` (소문자 `app`로 통일)
+
+### 2026-06-17 — `kanan-nano-21b-instruct-prompt-app.py` 수정
 - **Chat template 적용**: 입력을 평문 대신 메시지 형식(`[{"role":"user", ...}]`)으로 전달해 instruct 모델이 지시를 제대로 따르도록 수정
 - **출력 손상 버그 제거**: 정상 응답까지 잘라먹던 정규식 2개(첫 마침표까지 삭제, 코드펜스 강제 치환)를 제거하고, 반환된 대화의 마지막 assistant 메시지에서 응답 추출
 - **dtype**: deprecated된 `torch_dtype=` → `dtype=` 으로 교체 (transformers 5.x 대응)
