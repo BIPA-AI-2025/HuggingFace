@@ -12,6 +12,7 @@ Hugging Face Transformers 기반 한국어 LLM 실습 코드 모음입니다.
 | `kanan-nano-21b-instruct-prompt-app.py` | Kanana-Nano 2.1B **instruct** 프롬프트 앱 |
 | `kanan-nano-21b-instruct-trans.ipynb` | Kanana-Nano 2.1B instruct 노트북 |
 | `kogpt2_text_generator.ipynb` | KoGPT2 텍스트 생성 예제 |
+| `트랜스포머로 무엇을 할 수 있나요.ipynb` | Transformers `pipeline` 8종(감정분석·zero-shot·생성·fill-mask·NER·QA·요약·번역) 튜토리얼 |
 
 ## 실행 방법 (Streamlit 앱)
 
@@ -24,6 +25,13 @@ streamlit run kanan-nano-21b-instruct-prompt-app.py
 > 두 모델 모두 컨텍스트 길이는 **8192 토큰**(입력+출력 합산)입니다.
 
 ## 변경 내역 (Changelog)
+
+### 2026-06-17 — `트랜스포머로 무엇을 할 수 있나요.ipynb` 수정
+- **NER**: 5.x에서 제거된 `grouped_entities=True` → `aggregation_strategy="simple"`로 교체
+- **한국어 NER**: 파인튜닝 안 된 `kykim/bert-kor-base`(랜덤 헤드 → 무의미한 결과)를 실제 NER 모델 `Leo97/KoELECTRA-small-v3-modu-ner`로 교체, 출력 갱신
+- **pip install 셀**: 사전 구성 환경을 깨뜨릴 수 있어(fsspec/cuda 충돌) 주석 처리
+- **버전 안내**: QA·요약·번역 섹션에 transformers<5.0 안내 추가 (해당 pipeline은 5.x에서 제거됨, 코드/출력은 <5.0 기준 유지)
+- **정리**: 오타(`strat`→`start`, `단의의`→`단어의`), 커널 `torch_211_env` 지정
 
 ### 2026-06-17 — 파일명 변경
 - `kanan-nano-21b-instruct-prompt-aPP.py` → `kanan-nano-21b-instruct-prompt-app.py` (소문자 `app`로 통일)
