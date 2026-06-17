@@ -30,7 +30,9 @@ streamlit run kanan-nano-21b-instruct-prompt-app.py
 - **NER**: 5.x에서 제거된 `grouped_entities=True` → `aggregation_strategy="simple"`로 교체
 - **한국어 NER**: 파인튜닝 안 된 `kykim/bert-kor-base`(랜덤 헤드 → 무의미한 결과)를 실제 NER 모델 `Leo97/KoELECTRA-small-v3-modu-ner`로 교체, 출력 갱신
 - **pip install 셀**: 사전 구성 환경을 깨뜨릴 수 있어(fsspec/cuda 충돌) 주석 처리
-- **버전 안내**: QA·요약·번역 섹션에 transformers<5.0 안내 추가 (해당 pipeline은 5.x에서 제거됨, 코드/출력은 <5.0 기준 유지)
+- **QA·요약·번역 재작성**: 해당 `pipeline`들은 transformers 5.0에서 제거됨 → `AutoModelForQuestionAnswering` / `AutoModelForSeq2SeqLM` 직접 호출로 재작성해 transformers 5.3에서 동작
+  - 한국어 요약(kobart): `AutoTokenizer`가 잘못된 `RobertaTokenizer`를 로드해 출력이 깨지던 문제 → `PreTrainedTokenizerFast` 명시로 정상화
+- **검증**: transformers 5.3에서 전체 셀 실행(에러 0), 모든 출력 재생성
 - **정리**: 오타(`strat`→`start`, `단의의`→`단어의`), 커널 `torch_211_env` 지정
 
 ### 2026-06-17 — 파일명 변경
