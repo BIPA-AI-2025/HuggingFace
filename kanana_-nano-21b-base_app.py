@@ -17,13 +17,14 @@ st.markdown(
 )
 
 prompt = st.text_area("프롬프트를 입력하세요:", "한국의 수도는")
-max_tokens  = st.slider("생성할 토큰 수", 10, 200, 50)
+max_tokens  = st.slider("생성할 토큰 수", 10, 4096, 256)
 temperature = st.slider("Temperature (창의성)", 0.1, 1.5, 0.8)
 top_k       = st.slider("Top-k", 0, 100, 50)
 top_p       = st.slider("Top-p (nucleus)", 0.05, 1.0, 0.95)  # 0.0은 degenerate → 최소 0.05
 generate_button = st.button("텍스트 생성")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+MAX_CONTEXT = 8192  # 모델 컨텍스트 한계(max_position_embeddings): 입력+출력 합산
 
 @st.cache_resource
 def load_model():
@@ -65,10 +66,16 @@ if generate_button:
         with st.spinner("생성 중..."):
             # 입력 토큰화 및 디바이스로 이동
             inputs = tokenizer(prompt, return_tensors="pt").to(device)
+            # 컨텍스트 한계(8192) 초과 방지: 프롬프트 길이를 빼서 생성 토큰 수를 동적으로 제한
+            prompt_len = inputs["input_ids"].shape[1]
+            safe_max = max(1, min(max_tokens, MAX_CONTEXT - prompt_len))
+            if safe_max < max_tokens:
+                st.warning(f"프롬프트({prompt_len}토큰)가 길어 생성 토큰을 {safe_max}개로 제한했습니다 "
+                           f"(모델 컨텍스트 {MAX_CONTEXT}토큰).")
             with torch.no_grad():
                 generated = model.generate(
                     **inputs,
-                    max_new_tokens=max_tokens,
+                    max_new_tokens=safe_max,
                     do_sample=True,
                     temperature=temperature,
                     top_k=top_k,
